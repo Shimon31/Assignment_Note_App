@@ -2,7 +2,7 @@ import 'package:assignment_note_app/modules/auth/login_screen.dart';
 import 'package:assignment_note_app/modules/auth/register_screen.dart';
 import 'package:assignment_note_app/modules/notes/add_note.dart';
 import 'package:assignment_note_app/modules/notes/home.dart';
-import 'package:assignment_note_app/modules/splash/splash_screen.dart';
+import 'package:assignment_note_app/modules/splash/splash_page.dart';
 import 'package:go_router/go_router.dart';
 
 
@@ -13,7 +13,7 @@ class AppRoutes {
 
       GoRoute(
         path: '/',
-        builder: (context, state) => const SplashScreen(),
+        builder: (context, state) => const SplashPage(),
       ),
 
       GoRoute(
