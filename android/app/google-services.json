@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "419714716812",
+    "project_id": "job-task-d2aed",
+    "storage_bucket": "job-task-d2aed.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419714716812:android:37cc50571328071c2997a9",
+        "android_client_info": {
+          "package_name": "com.example.assignment_note_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoUUewfoK-2qkDFwpX9gMy4sh8E36VODs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
