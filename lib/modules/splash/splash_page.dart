@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,57 +16,35 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-
-    checkFirstTime();
+    checkUser();
   }
 
-  Future<void> checkFirstTime() async {
+  Future<void> checkUser() async {
 
     final prefs = await SharedPreferences.getInstance();
+    final user = FirebaseAuth.instance.currentUser;
 
-    bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
+    Timer(const Duration(seconds: 2), () {
 
-    Timer(const Duration(seconds: 2), () async {
+      bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
 
-      if (isFirstTime) {
-
-        await prefs.setBool('isFirstTime', false);
-
-        context.go('/login');
-
-      } else {
-
+      if (user != null) {
         context.go('/home');
+      }
+      else if (isFirstTime) {
+        prefs.setBool('isFirstTime', false);
+        context.go('/login');
+      }
+      else {
+        context.go('/login');
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-
-            Icon(
-              Icons.note_alt,
-              size: 100,
-            ),
-
-            SizedBox(height: 20),
-
-            Text(
-              "Notes App",
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
+    return const Scaffold(
+      body: Center(child: CircularProgressIndicator()),
     );
   }
 }
