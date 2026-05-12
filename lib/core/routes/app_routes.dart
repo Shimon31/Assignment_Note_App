@@ -1,5 +1,5 @@
-import 'package:assignment_note_app/modules/auth/login_screen.dart';
-import 'package:assignment_note_app/modules/auth/register_screen.dart';
+import 'package:assignment_note_app/modules/auth/login_page.dart';
+import 'package:assignment_note_app/modules/auth/register_page.dart';
 import 'package:assignment_note_app/modules/notes/add_note.dart';
 import 'package:assignment_note_app/modules/notes/home.dart';
 import 'package:assignment_note_app/modules/splash/splash_page.dart';
@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 
 class AppRoutes {
   static final router = GoRouter(
-    initialLocation: '/',
+    initialLocation: '/login',
     routes: [
 
       GoRoute(
@@ -18,12 +18,12 @@ class AppRoutes {
 
       GoRoute(
         path: '/login',
-        builder: (context, state) => const LoginScreen(),
+        builder: (context, state) => const LoginPage(),
       ),
 
       GoRoute(
         path: '/register',
-        builder: (context, state) => const RegisterScreen(),
+        builder: (context, state) => const RegisterPage(),
       ),
 
       GoRoute(
