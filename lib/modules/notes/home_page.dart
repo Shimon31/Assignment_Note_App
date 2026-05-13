@@ -6,91 +6,68 @@ import '../auth/auth_controller.dart';
 import 'note_controller.dart';
 
 class HomePage extends StatelessWidget {
-
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final NoteController noteController = Get.put(NoteController());
 
-    final NoteController noteController =
-    Get.put(NoteController());
-
-    final AuthController authController =
-    Get.find();
+    final AuthController authController = Get.find();
 
     return Scaffold(
-
       appBar: AppBar(
-
-        title: const Text("My Notes"),
-
+        title: Text(
+          "My Notes",
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
 
         actions: [
-
-          IconButton(
-
+          TextButton.icon(
             onPressed: () {
-
               authController.logout(context);
             },
 
-            icon: const Icon(Icons.logout),
+            icon: const Icon(Icons.logout, color: Colors.red),
+
+            label: const Text("Logout", style: TextStyle(color: Colors.red)),
           ),
         ],
       ),
 
       floatingActionButton: FloatingActionButton(
-
+        backgroundColor: Colors.lightBlue,
         onPressed: () {
-
           context.go('/add-note');
         },
 
-        child: const Icon(Icons.add),
+        child: Icon(Icons.add, color: Colors.white),
       ),
 
       body: Obx(() {
-
         if (noteController.isLoading.value) {
-
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return Center(child: CircularProgressIndicator());
         }
 
         if (noteController.notesList.isEmpty) {
-
-          return const Center(
-            child: Text(
-              "No Notes Found",
-              style: TextStyle(fontSize: 18),
-            ),
+          return Center(
+            child: Text("No Notes Found", style: TextStyle(fontSize: 18)),
           );
         }
 
         return ListView.builder(
-
           itemCount: noteController.notesList.length,
 
           itemBuilder: (context, index) {
-
             final note = noteController.notesList[index];
-
             return Card(
-
-              margin: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 8,
-              ),
+              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              color: Colors.yellow[200],
 
               child: ListTile(
-
                 title: Text(
                   note.title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
 
                 subtitle: Text(
@@ -100,16 +77,11 @@ class HomePage extends StatelessWidget {
                 ),
 
                 trailing: IconButton(
-
                   onPressed: () {
-
                     noteController.deleteNote(note.id);
                   },
 
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                  ),
+                  icon: Icon(Icons.delete, color: Colors.red),
                 ),
               ),
             );
