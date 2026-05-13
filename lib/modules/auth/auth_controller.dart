@@ -4,10 +4,19 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class AuthController extends GetxController {
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   var isLoading = false.obs;
+
+  void _showSnackbar(BuildContext context, String message, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: color,
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
 
   Future<void> registerUser({
     required String name,
@@ -15,9 +24,7 @@ class AuthController extends GetxController {
     required String password,
     required BuildContext context,
   }) async {
-
     try {
-
       isLoading.value = true;
 
       await _auth.createUserWithEmailAndPassword(
@@ -25,26 +32,12 @@ class AuthController extends GetxController {
         password: password,
       );
 
-      Get.snackbar(
-        "Success",
-        "Registration Successful",
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
+      _showSnackbar(context, "Registration Successful", Colors.green);
 
       context.go('/login');
-
     } on FirebaseAuthException catch (e) {
-
-      Get.snackbar(
-        "Error",
-        e.message ?? "Something went wrong",
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-
+      _showSnackbar(context, e.message ?? "Something went wrong", Colors.red);
     } finally {
-
       isLoading.value = false;
     }
   }
@@ -54,45 +47,23 @@ class AuthController extends GetxController {
     required String password,
     required BuildContext context,
   }) async {
-
     try {
-
       isLoading.value = true;
 
-      await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
 
-      Get.snackbar(
-        "Success",
-        "Login Successful",
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
+      _showSnackbar(context, "Login Successful", Colors.green);
 
       context.go('/home');
-
     } on FirebaseAuthException catch (e) {
-
-      Get.snackbar(
-        "Error",
-        e.message ?? "Something went wrong",
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-
+      _showSnackbar(context, e.message ?? "Something went wrong", Colors.red);
     } finally {
-
       isLoading.value = false;
     }
   }
 
-
   Future<void> logout(BuildContext context) async {
-
     await _auth.signOut();
-
     context.go('/login');
   }
 }
