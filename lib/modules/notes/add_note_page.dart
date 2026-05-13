@@ -6,21 +6,27 @@ import '../../widgets/custom_textfield.dart';
 import 'note_controller.dart';
 
 class AddNotePage extends StatelessWidget {
-
   const AddNotePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     final NoteController controller = Get.find();
 
     final titleController = TextEditingController();
     final descriptionController = TextEditingController();
 
     return Scaffold(
-
       appBar: AppBar(
-        title: const Text("Add Note"),
+        leading: IconButton(
+          onPressed: () {
+            context.go('/home');
+          },
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+        ),
+        title: const Text(
+          "Add Note",
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
 
@@ -28,9 +34,7 @@ class AddNotePage extends StatelessWidget {
         padding: const EdgeInsets.all(20),
 
         child: Column(
-
           children: [
-
             CustomTextField(
               controller: titleController,
               hintText: "Enter Title",
@@ -47,28 +51,30 @@ class AddNotePage extends StatelessWidget {
             const SizedBox(height: 30),
 
             Obx(() {
-
               return controller.isLoading.value
                   ? const CircularProgressIndicator()
                   : SizedBox(
+                      width: double.infinity,
 
-                width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          controller.addNote(
+                            title: titleController.text.trim(),
+                            description: descriptionController.text.trim(),
+                            context: context,
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          foregroundColor: Colors.white,
+                        ),
 
-                child: ElevatedButton(
-
-                  onPressed: () {
-
-                    controller.addNote(
-                      title: titleController.text.trim(),
-                      description:
-                      descriptionController.text.trim(),
-                      context: context,
+                        child: const Text(
+                          "Save Note",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     );
-                  },
-
-                  child: const Text("Save Note"),
-                ),
-              );
             }),
           ],
         ),
